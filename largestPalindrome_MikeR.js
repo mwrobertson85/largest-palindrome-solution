@@ -8,7 +8,7 @@
 //  0. Obtain this file from https://github.com/ankur-cp/largest-palindrome-solution
 //  1. Rename this file, substituting "yourname" with your name
 //  2. Replace "yourname" with your name in the variable below
-exports.name = "yourname";
+exports.name = "MikeR";
 //  3. Add your optimizations to the solution below
 //  4. Submit a pull request
 
@@ -23,31 +23,34 @@ isPalindrome = (num) => {
 exports.getLargestPalindrome = (N) => {
 
   let largestPalindrome = 0;
+  let counter = 0;
 
   // iterate through range of multiplicands
-  for (let i = 10 ** (N - 1); i < 10 ** N; i++) {
-      
-    for (let j = 10 ** (N - 1); j < 10 ** N; j++) {
-
-      // check if the product is a palindrome
-      if (isPalindrome(i * j)) {
-
-        // check if it's larger than our largest palindrome
-        if (i * j > largestPalindrome) {
-                  
+  for (let i = 10**N - 1; i > 10**(N-1); i--) { //I switched looping direction to start big and go small
+    for (let j = 10**N - 1; j > 10**(N-1); j--) {
+      let testNum = i*j
+      // check if it's larger than our largest palindrome
+      if (testNum > largestPalindrome) { //starting big will skip numbers here fast once a solution is found
+        // check if the product is a palindrome
+        if (isPalindrome(testNum)) {
           // update largest palindrome
-          largestPalindrome = i * j;
+          largestPalindrome = testNum;
+          // console.log(i,j) 
         }
       }
+      // if testnum < largestPalindrom then next check number is smaller and smaller etc
+      else {break}
+    }
+    if (i*(10**N)-1<largestPalindrome){ //break the outter loop once i* the biggest j option is < current Pal
+      break
     }
   }
-
   // return result
   return largestPalindrome;
 }
 
 // input
-const N = 3;
+const N = 7;
 
 // CHALLENGE: Can you optimize the algorithm above so that works for input values N=4, N=5, N=6 in a "reasonable" amount of time?
 
